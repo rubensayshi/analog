@@ -91,10 +91,24 @@ class Analog {
 	const INFO     = 6; // Information, not an error
 	const DEBUG    = 7; // Debugging messages
 
+    protected static $levels = array(
+        self::URGENT   => 'URGENT',
+        self::ALERT    => 'ALERT',
+        self::CRITICAL => 'CRITICAL',
+        self::ERROR    => 'ERROR',
+        self::WARNING  => 'WARNING',
+        self::NOTICE   => 'NOTICE',
+        self::INFO     => 'INFO',
+        self::DEBUG    => 'DEBUG',
+    );
+
 	/**
 	 * The default format for log messages (machine, date, level, message)
 	 * written to a file. To change the order of items in the string,
 	 * use `%1$s` references.
+     * It's also possible to display the level as a string with %5\$s
+     *
+     * eg: $format = "[%2\$s][%5\$d] %4\$s\n"
 	 */
 	public static $format = "%s - %s - %d - %s\n";
 
@@ -144,7 +158,8 @@ class Analog {
 			'machine' => self::$machine,
 			'date' => gmdate ('Y-m-d H:i:s'),
 			'level' => $level,
-			'message' => $message
+			'message' => $message,
+            'level_string' => self::$levels[$level],
 		);
 	}
 
